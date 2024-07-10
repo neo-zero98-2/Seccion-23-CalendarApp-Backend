@@ -4,7 +4,7 @@ var jwt = require('jsonwebtoken');
 const validaJWT = (req = request, res = response, next) => {
     const token = req.header('x-token');
     if(!token){
-        res.status(401).json({
+        return res.status(401).json({
             ok: false,
             msg: 'el x-token no existe'
         })
@@ -16,7 +16,7 @@ const validaJWT = (req = request, res = response, next) => {
         req.name = payload.name;
     } catch (error) {
         console.log("err ", error);
-        res.status(401).json({
+        return res.status(401).json({
             ok: false,
             msg: 'El token no es valido'
         })

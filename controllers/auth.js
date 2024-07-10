@@ -24,7 +24,7 @@ const crearUsuario = async(req = request, res = response) => {
         
         const token = await generarJwt(usuario.id, usuario.name);
 
-        res.status(200).json({
+        return res.status(200).json({
             ok: true,
             msg: 'registro',
             uid: usuario.id,
@@ -33,7 +33,7 @@ const crearUsuario = async(req = request, res = response) => {
         })
     } catch (error) {
         console.log(error);
-        res.status(500).json({
+        return res.status(500).json({
             ok: false,
             msg: 'Favor de hablar con el administrador del sistema'
         })
@@ -63,7 +63,7 @@ const loginUsuario = async(req = request, res = response) => {
 
         const token = await generarJwt(usuario.id, usuario.name);
 
-        res.status(200).json({
+        return res.status(200).json({
             ok: true,
             msg: 'login',
             uid: usuario.id,
@@ -72,7 +72,7 @@ const loginUsuario = async(req = request, res = response) => {
         })
     } catch (error) {
         console.log(error);
-        res.status(500).json({
+        return res.status(500).json({
             ok: false,
             msg: "Error en login, favor de contactar con administrador"
         })
@@ -87,23 +87,18 @@ const revalidarToken = async (req = request, res = response) => {
     
     try {
         const token = await generarJwt(uid, name);
-        res.status(200).json({
+        return res.status(200).json({
             ok: true,
-            msg: 'renew',
+            uid, name,
             token
         })
     } catch (error) {
         console.log("error ", error);
-        res.status(401).json({
+        return res.status(401).json({
             ok: false,
             msg: 'Error al autenticar, favor de contactar con administrador'
         })
     }
-    // res.status(200).json({
-    //     ok: true,
-    //     msg: 'renew',
-    //     token
-    // })
 }
 
 module.exports = {
